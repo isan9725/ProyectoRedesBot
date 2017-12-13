@@ -19,7 +19,7 @@ conn = context.wrap_socket(sock)
 
 conn.connect(("172.16.69.153", 443))
 
-print conn.recv(256)
+print(conn.recv(256))
 conn.send("Hi Server!")
 
 conn.close()

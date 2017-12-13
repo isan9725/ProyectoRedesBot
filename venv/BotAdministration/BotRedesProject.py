@@ -61,19 +61,14 @@ def sendEmail(bot, update, args):
     if len(args) == 1:
         from_address = "botproyectoredes.2017@gmail.com"
         to_address = args[0]
-        message = "Hello, world!"
+        message = "Hello, world! xD"
 
         mime_message = MIMEText(message, "plain")
         mime_message["From"] = from_address
         mime_message["To"] = to_address
         mime_message["Subject"] = "Correo de prueba"
 
-        if("gmail.com" in args[0]):
-            smtp = SMTP("smtp.gmail.com", 587)
-        elif("@hotmail.com" in args[0]):
-            smtp = SMTP("smtp.live.com", 587)
-        else:
-            update.message.reply_text("No se reconce el correo electronico")
+        smtp = SMTP("smtp.gmail.com", 587)
 
         smtp.ehlo()
         smtp.starttls()
@@ -85,7 +80,7 @@ def sendEmail(bot, update, args):
         smtp.close()
         smtp.quit()
 
-        update.message.reply_text("Correo enviado")
+        #update.message.reply_text("Correo enviado")
     else:
         update.message.reply_text("Necesita debe especificar la direccion email a la que desea enviar el correo.")
 
@@ -268,7 +263,6 @@ def main():
     updater.dispatcher.add_handler(CommandHandler("pwd", pwd))
     updater.dispatcher.add_handler(CommandHandler("drivers", drivers))
     updater.dispatcher.add_handler(CommandHandler("cd", cd, pass_args=True))
-    updater.dispatcher.add_handler(CommandHandler("lsusb", lsusb))
     updater.dispatcher.add_handler(CommandHandler("montajes", montajes))
     updater.dispatcher.add_handler(CommandHandler("borrar", borrar, pass_args=True))
     updater.dispatcher.add_handler(CommandHandler("cat", cat, pass_args=True))
