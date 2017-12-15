@@ -7,19 +7,22 @@ import ssl
 Se crea un objeto del tipo SSLContext, el cual recibe por parametro el protocolo que
 se desea utilizar en la negociacion de la seguridad para el establecimiento de la conexion.
 """
-context = ssl.SSLContext(ssl.PROTOCOL_TLSv1)
 
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+def ConnexionPedido():
+    context = ssl.SSLContext(ssl.PROTOCOL_TLSv1)
 
-"""
-Envuelve el socket dentro del contexto de seguridad especificado anteriormente.
-Retorna un objecto del tipo SSLSocket.
-"""
-conn = context.wrap_socket(sock)
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-conn.connect(("172.16.69.153", 443))
+    """
+    Envuelve el socket dentro del contexto de seguridad especificado anteriormente.
+    Retorna un objecto del tipo SSLSocket.
+    """
+    conn = context.wrap_socket(sock)
 
-print(conn.recv(256))
-conn.send("Hi Server!")
+    conn.connect(("172.16.69.153", 443))
 
-conn.close()
+    print(conn.recv(256))
+    conn.send("Hi Server!")
+
+    conn.close()
+

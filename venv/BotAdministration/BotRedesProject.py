@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-
+import MySQLdb
+import _mysql_exceptions
 import os
 import sys
 import time
@@ -246,8 +247,33 @@ def traceroute(bot, update, args):
                 "Especifica una maquina_remota ip")  # Respondemos al comando con el mensaje
 
 
+def coneccionMySQL(bot, update):
+    db_host = 'localhost'
+    usuario = 'root'
+    contraseña = '12345'
+    base_de_datos = 'proyectoredesbot'
+
+    db = MySQLdb.Connect(host = "localhost", user = "root", passwd = "12345", database = "proyectoredesbot")
+
+    cursor = db.cursor()
+
+    #Alta de Inventario
+    sql = "INSERT INTO inventariomaquinas VALUES "
+    #sql+="(" + "'" + nombre + "'," + "'" + ipmaquina + "'," + "'" + macadress + "'," + "'" + discoduro + "'," + "'" + version + "'," + "'" + ram + "'," + "'" + procesador + "'" + ")"
+    sql+="(null,'isra','192.168.228.10','64:27:37:9B:BB:47','120gb','1.2','4gb','intel 3')"
+
+    cursor.execute(sql)
+
+    db.autocommit()
+
+    cursor.close()
+    update.message.reply_text("Agregado a la base de datos")
+
+
+
+
 def main():
-    # Create the Updater and pass it your bot's token.
+    # se crea el updateer con el Token especifico de nuestro bot
     updater = Updater("472695035:AAGM2Ws9MGWoqs2d3Xb5CVglJaGoJK2376w")
 
     updater.dispatcher.add_handler(CommandHandler('start', start))
@@ -277,13 +303,13 @@ def main():
     updater.dispatcher.add_handler(CommandHandler("netstat", netstat))
     updater.dispatcher.add_handler(CommandHandler("sftp", sftp, pass_args=True))
     updater.dispatcher.add_handler(CommandHandler("traceroute", traceroute, pass_args=True))
+    updater.dispatcher.add_handler(CommandHandler("coneccionMySQL", coneccionMySQL))
     #updater.dispatcher.add_error_handler(error)
 
-    # Start the Bot
+    # Imicio del Bot
     updater.start_polling()
 
-    # Run the bot until the user presses Ctrl-C or the process receives SIGINT,
-    # SIGTERM or SIGABRT
+    # El bot se ejecuta hasta que se el archivo se detenga o se preciona CTRL + C
     updater.idle()
 
 
